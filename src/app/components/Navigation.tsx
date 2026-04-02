@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router';
-import logoImage from 'figma:asset/cab6972422575801fd909214e76f7ce2b90ef409.png';
 
 export function Navigation() {
   const location = useLocation();
@@ -21,7 +20,7 @@ export function Navigation() {
         <div className="flex items-center justify-between h-20">
           {/* Brand */}
           <Link to="/" className="flex items-center gap-4">
-            <img src={logoImage} alt="Atención Activa" className="h-10 w-auto" />
+            <img src='/imgs/logo_01.png' alt="Atención Activa" className="h-10 w-auto" />
             <div className="flex flex-col">
               <div className="text-2xl tracking-tight" style={{ color: '#17202A' }}>
                 <span style={{ fontWeight: 700 }}>Atención Activa</span>

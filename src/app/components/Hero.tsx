@@ -1,7 +1,6 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ArrowRight, PhoneIncoming, MessageSquare, GitBranch, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router';
-import logoImage from 'figma:asset/cab6972422575801fd909214e76f7ce2b90ef409.png';
 
 export function Hero() {
   return (
@@ -12,7 +11,7 @@ export function Hero() {
           <div>
             {/* Logo Badge */}
             <div className="flex items-center gap-3 mb-6">
-              <img src={logoImage} alt="Atención Activa" className="h-8 w-auto opacity-80" />
+              <img src='/imgs/logo_01.png' alt="Atención Activa" className="h-8 w-auto opacity-80" />
               {/* Eyebrow */}
               <div
                 className="text-xs uppercase tracking-widest"
