@@ -1,5 +1,4 @@
 import { Link } from 'react-router';
-import logoImage from 'figma:asset/cab6972422575801fd909214e76f7ce2b90ef409.png';
 
 export function Footer() {
   return (
@@ -10,7 +9,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Brand */}
             <Link to="/" className="flex items-center gap-4">
-              <img src={logoImage} alt="Atención Activa" className="h-10 w-auto opacity-90" />
+              <img src='/imgs/logo_01.png' alt="Atención Activa" className="h-10 w-auto opacity-90" />
               <div className="flex flex-col text-center md:text-left">
                 <div className="text-xl tracking-tight" style={{ color: '#FFFEFB' }}>
                   <span style={{ fontWeight: 700 }}>Atención Activa</span>
