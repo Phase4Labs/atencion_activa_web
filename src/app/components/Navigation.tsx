@@ -47,13 +47,15 @@ export function Navigation() {
             >
               Solución
             </button>
-            <button
-              onClick={() => scrollToSection('encaje')}
+            <a
+              href="https://atencion-activa-members.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm tracking-wide transition-colors hover:opacity-70"
               style={{ color: '#4B5563', fontWeight: 500 }}
             >
-              Encaje
-            </button>
+              Área de miembros
+            </a>
             <Link
               to="/contacto"
               className="px-6 py-2.5 rounded-lg text-sm transition-all hover:opacity-90"
