@@ -4,14 +4,13 @@ import { Link } from 'react-router';
 
 export function Hero() {
   return (
-    <section className="py-20 lg:py-28" style={{ backgroundColor: '#F7F6F2' }}>
+    <section className="py-20 lg:py-10" style={{ backgroundColor: '#F7F6F2' }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Copy */}
           <div>
             {/* Logo Badge */}
             <div className="flex items-center gap-3 mb-6">
-              <img src='/imgs/logo_01.png' alt="Atención Activa" className="h-8 w-auto opacity-80" />
               {/* Eyebrow */}
               <div
                 className="text-xs uppercase tracking-widest"
