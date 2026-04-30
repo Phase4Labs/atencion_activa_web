@@ -27,7 +27,7 @@ export default function Contact() {
     }, 3000);
   };
 
-  const whatsappNumber = '34600000000'; // Replace with actual WhatsApp number
+  const whatsappNumber = '34634097542'; // Replace with actual WhatsApp number
   const whatsappMessage = encodeURIComponent('Hola, estoy interesado en Atención Activa y me gustaría recibir más información.');
   const email = 'contacto@atencionactiva.es';
 
@@ -196,7 +196,7 @@ export default function Contact() {
                           borderColor: errors.telefono ? '#d4183d' : '#DDD9CF',
                           color: '#17202A',
                         }}
-                        placeholder="+34 600 000 000"
+                        placeholder="+34634097542"
                       />
                       {errors.telefono && (
                         <p className="text-sm mt-1" style={{ color: '#d4183d' }}>
@@ -356,7 +356,7 @@ export default function Contact() {
               </div>
 
               {/* Phone */}
-              <div
+              {/*<div
                 className="p-6 rounded-2xl"
                 style={{
                   backgroundColor: '#FFFEFB',
@@ -379,15 +379,15 @@ export default function Contact() {
                       Teléfono
                     </h3>
                     <a
-                      href="tel:+34600000000"
+                      href="tel:+34634097542"
                       className="text-sm hover:underline"
                       style={{ color: '#3F5A4F', fontWeight: 500 }}
                     >
-                      +34 600 000 000
+                      +34 634 097 542
                     </a>
                   </div>
                 </div>
-              </div>
+              </div>*/}
 
               {/* Location */}
               <div
