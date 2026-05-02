@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
+import Unsubscribe from './pages/Unsubscribe';
 
 export const router = createBrowserRouter([
   {
@@ -20,5 +21,9 @@ export const router = createBrowserRouter([
   {
     path: '/terminos',
     element: <TermsAndConditions />,
+  },
+  {
+    path: '/unsubscribe',
+    element: <Unsubscribe />,
   },
 ]);
