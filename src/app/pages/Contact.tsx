@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
-import { Mail, MessageCircle, Send, MapPin, Phone } from 'lucide-react';
+import { Mail, MessageCircle, Send, MapPin } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 interface ContactFormData {
@@ -13,21 +13,33 @@ interface ContactFormData {
   mensaje: string;
 }
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
 
-  const onSubmit = (data: ContactFormData) => {
-    console.log('Form data:', data);
-    // Here you would typically send the data to your backend
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+  const onSubmit = async (data: ContactFormData) => {
+    setStatus('sending');
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/send-contact-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error ?? 'Error desconocido');
+      }
+      setStatus('success');
       reset();
-    }, 3000);
+    } catch (err) {
+      console.error('Contact form error:', err);
+      setStatus('error');
+    }
   };
 
-  const whatsappNumber = '34634097542'; // Replace with actual WhatsApp number
+  const whatsappNumber = '34634097542';
   const whatsappMessage = encodeURIComponent('Hola, estoy interesado en Atención Activa y me gustaría recibir más información.');
   const email = 'contacto@atencionactiva.es';
 
@@ -35,7 +47,6 @@ export default function Contact() {
     <div className="min-h-screen" style={{ fontFamily: 'Manrope, sans-serif', backgroundColor: '#F7F6F2' }}>
       <Navigation />
 
-      {/* Hero Section */}
       <section className="py-20 lg:py-28" style={{ backgroundColor: '#F7F6F2' }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
@@ -60,7 +71,8 @@ export default function Contact() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Contact Form - Takes 2 columns */}
+
+            {/* Contact Form */}
             <div className="lg:col-span-2">
               <div
                 className="p-8 lg:p-10 rounded-2xl"
@@ -83,15 +95,40 @@ export default function Contact() {
                   Completad este formulario y nos pondremos en contacto para programar una primera conversación sin compromiso.
                 </p>
 
+                {/* Success message */}
+                {status === 'success' && (
+                  <div
+                    className="mb-6 p-4 rounded-lg"
+                    style={{ backgroundColor: '#d4e6df', border: '1px solid #a8c5ba' }}
+                  >
+                    <p style={{ color: '#2e4238', fontWeight: 600, margin: 0 }}>
+                      ✓ Mensaje enviado correctamente
+                    </p>
+                    <p style={{ color: '#4a6358', fontSize: '14px', margin: '4px 0 0 0' }}>
+                      Nos pondremos en contacto contigo en breve.
+                    </p>
+                  </div>
+                )}
+
+                {/* Error message */}
+                {status === 'error' && (
+                  <div
+                    className="mb-6 p-4 rounded-lg"
+                    style={{ backgroundColor: '#fdf0ee', border: '1px solid #e07340' }}
+                  >
+                    <p style={{ color: '#c0392b', fontWeight: 600, margin: 0 }}>
+                      No se pudo enviar el mensaje
+                    </p>
+                    <p style={{ color: '#4B5563', fontSize: '14px', margin: '4px 0 0 0' }}>
+                      Por favor inténtalo de nuevo o escríbenos a {email}
+                    </p>
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
-                    {/* Nombre */}
                     <div>
-                      <label
-                        htmlFor="nombre"
-                        className="block text-sm mb-2"
-                        style={{ color: '#17202A', fontWeight: 600 }}
-                      >
+                      <label htmlFor="nombre" className="block text-sm mb-2" style={{ color: '#17202A', fontWeight: 600 }}>
                         Nombre *
                       </label>
                       <input
@@ -99,27 +136,14 @@ export default function Contact() {
                         type="text"
                         {...register('nombre', { required: 'Este campo es obligatorio' })}
                         className="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2"
-                        style={{
-                          backgroundColor: '#F7F6F2',
-                          borderColor: errors.nombre ? '#d4183d' : '#DDD9CF',
-                          color: '#17202A',
-                        }}
+                        style={{ backgroundColor: '#F7F6F2', borderColor: errors.nombre ? '#d4183d' : '#DDD9CF', color: '#17202A' }}
                         placeholder="Vuestro nombre"
                       />
-                      {errors.nombre && (
-                        <p className="text-sm mt-1" style={{ color: '#d4183d' }}>
-                          {errors.nombre.message}
-                        </p>
-                      )}
+                      {errors.nombre && <p className="text-sm mt-1" style={{ color: '#d4183d' }}>{errors.nombre.message}</p>}
                     </div>
 
-                    {/* Empresa */}
                     <div>
-                      <label
-                        htmlFor="empresa"
-                        className="block text-sm mb-2"
-                        style={{ color: '#17202A', fontWeight: 600 }}
-                      >
+                      <label htmlFor="empresa" className="block text-sm mb-2" style={{ color: '#17202A', fontWeight: 600 }}>
                         Empresa *
                       </label>
                       <input
@@ -127,29 +151,16 @@ export default function Contact() {
                         type="text"
                         {...register('empresa', { required: 'Este campo es obligatorio' })}
                         className="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2"
-                        style={{
-                          backgroundColor: '#F7F6F2',
-                          borderColor: errors.empresa ? '#d4183d' : '#DDD9CF',
-                          color: '#17202A',
-                        }}
+                        style={{ backgroundColor: '#F7F6F2', borderColor: errors.empresa ? '#d4183d' : '#DDD9CF', color: '#17202A' }}
                         placeholder="Nombre de vuestra empresa"
                       />
-                      {errors.empresa && (
-                        <p className="text-sm mt-1" style={{ color: '#d4183d' }}>
-                          {errors.empresa.message}
-                        </p>
-                      )}
+                      {errors.empresa && <p className="text-sm mt-1" style={{ color: '#d4183d' }}>{errors.empresa.message}</p>}
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
-                    {/* Email */}
                     <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm mb-2"
-                        style={{ color: '#17202A', fontWeight: 600 }}
-                      >
+                      <label htmlFor="email" className="block text-sm mb-2" style={{ color: '#17202A', fontWeight: 600 }}>
                         Email *
                       </label>
                       <input
@@ -157,33 +168,17 @@ export default function Contact() {
                         type="email"
                         {...register('email', {
                           required: 'Este campo es obligatorio',
-                          pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: 'Email no válido',
-                          },
+                          pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Email no válido' },
                         })}
                         className="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2"
-                        style={{
-                          backgroundColor: '#F7F6F2',
-                          borderColor: errors.email ? '#d4183d' : '#DDD9CF',
-                          color: '#17202A',
-                        }}
+                        style={{ backgroundColor: '#F7F6F2', borderColor: errors.email ? '#d4183d' : '#DDD9CF', color: '#17202A' }}
                         placeholder="email@empresa.com"
                       />
-                      {errors.email && (
-                        <p className="text-sm mt-1" style={{ color: '#d4183d' }}>
-                          {errors.email.message}
-                        </p>
-                      )}
+                      {errors.email && <p className="text-sm mt-1" style={{ color: '#d4183d' }}>{errors.email.message}</p>}
                     </div>
 
-                    {/* Teléfono */}
                     <div>
-                      <label
-                        htmlFor="telefono"
-                        className="block text-sm mb-2"
-                        style={{ color: '#17202A', fontWeight: 600 }}
-                      >
+                      <label htmlFor="telefono" className="block text-sm mb-2" style={{ color: '#17202A', fontWeight: 600 }}>
                         Teléfono *
                       </label>
                       <input
@@ -191,39 +186,22 @@ export default function Contact() {
                         type="tel"
                         {...register('telefono', { required: 'Este campo es obligatorio' })}
                         className="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2"
-                        style={{
-                          backgroundColor: '#F7F6F2',
-                          borderColor: errors.telefono ? '#d4183d' : '#DDD9CF',
-                          color: '#17202A',
-                        }}
-                        placeholder="+34634097542"
+                        style={{ backgroundColor: '#F7F6F2', borderColor: errors.telefono ? '#d4183d' : '#DDD9CF', color: '#17202A' }}
+                        placeholder="+34 612 345 678"
                       />
-                      {errors.telefono && (
-                        <p className="text-sm mt-1" style={{ color: '#d4183d' }}>
-                          {errors.telefono.message}
-                        </p>
-                      )}
+                      {errors.telefono && <p className="text-sm mt-1" style={{ color: '#d4183d' }}>{errors.telefono.message}</p>}
                     </div>
                   </div>
 
-                  {/* Número de propiedades */}
                   <div>
-                    <label
-                      htmlFor="propiedades"
-                      className="block text-sm mb-2"
-                      style={{ color: '#17202A', fontWeight: 600 }}
-                    >
+                    <label htmlFor="propiedades" className="block text-sm mb-2" style={{ color: '#17202A', fontWeight: 600 }}>
                       Número de propiedades que gestionáis
                     </label>
                     <select
                       id="propiedades"
                       {...register('propiedades')}
                       className="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2"
-                      style={{
-                        backgroundColor: '#F7F6F2',
-                        borderColor: '#DDD9CF',
-                        color: '#17202A',
-                      }}
+                      style={{ backgroundColor: '#F7F6F2', borderColor: '#DDD9CF', color: '#17202A' }}
                     >
                       <option value="">Seleccionar rango</option>
                       <option value="1-5">1-5 propiedades</option>
@@ -233,13 +211,8 @@ export default function Contact() {
                     </select>
                   </div>
 
-                  {/* Mensaje */}
                   <div>
-                    <label
-                      htmlFor="mensaje"
-                      className="block text-sm mb-2"
-                      style={{ color: '#17202A', fontWeight: 600 }}
-                    >
+                    <label htmlFor="mensaje" className="block text-sm mb-2" style={{ color: '#17202A', fontWeight: 600 }}>
                       Mensaje
                     </label>
                     <textarea
@@ -247,181 +220,86 @@ export default function Contact() {
                       {...register('mensaje')}
                       rows={5}
                       className="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2 resize-none"
-                      style={{
-                        backgroundColor: '#F7F6F2',
-                        borderColor: '#DDD9CF',
-                        color: '#17202A',
-                      }}
+                      style={{ backgroundColor: '#F7F6F2', borderColor: '#DDD9CF', color: '#17202A' }}
                       placeholder="Contadnos brevemente vuestra situación actual y qué os gustaría mejorar..."
                     />
                   </div>
 
-                  {/* Submit Button */}
                   <button
                     type="submit"
-                    disabled={submitted}
+                    disabled={status === 'sending' || status === 'success'}
                     className="w-full px-8 py-4 rounded-lg text-base transition-all hover:opacity-90 flex items-center justify-center gap-2"
                     style={{
-                      backgroundColor: submitted ? '#C9A97A' : '#3F5A4F',
+                      backgroundColor: status === 'success' ? '#a8c5ba' : '#3F5A4F',
                       color: '#FFFEFB',
                       fontWeight: 600,
-                      opacity: submitted ? 0.8 : 1,
+                      opacity: status === 'sending' ? 0.7 : 1,
+                      cursor: status === 'sending' ? 'wait' : 'pointer',
                     }}
                   >
-                    {submitted ? (
-                      <>
-                        <span>Mensaje enviado</span>
-                        <Send className="w-5 h-5" />
-                      </>
+                    {status === 'sending' ? (
+                      <span>Enviando...</span>
+                    ) : status === 'success' ? (
+                      <><span>Mensaje enviado</span><Send className="w-5 h-5" /></>
                     ) : (
-                      <>
-                        <span>Enviar solicitud</span>
-                        <Send className="w-5 h-5" />
-                      </>
+                      <><span>Enviar solicitud</span><Send className="w-5 h-5" /></>
                     )}
                   </button>
                 </form>
               </div>
             </div>
 
-            {/* Contact Options - Takes 1 column */}
+            {/* Contact Options */}
             <div className="space-y-6">
-              {/* WhatsApp */}
               <a
                 href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block p-6 rounded-2xl transition-all hover:opacity-90"
-                style={{
-                  backgroundColor: '#3F5A4F',
-                  boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)',
-                }}
+                style={{ backgroundColor: '#3F5A4F', boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)' }}
               >
                 <div className="flex items-start gap-4">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#FFFEFB' }}
-                  >
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#FFFEFB' }}>
                     <MessageCircle className="w-6 h-6" style={{ color: '#3F5A4F' }} />
                   </div>
                   <div>
-                    <h3
-                      className="text-lg mb-2"
-                      style={{ color: '#FFFEFB', fontWeight: 600 }}
-                    >
-                      WhatsApp
-                    </h3>
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{ color: '#F7F6F2', lineHeight: '1.6' }}
-                    >
+                    <h3 className="text-lg mb-2" style={{ color: '#FFFEFB', fontWeight: 600 }}>WhatsApp</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#F7F6F2', lineHeight: '1.6' }}>
                       Hablemos directamente. Contactad por WhatsApp para una respuesta rápida.
                     </p>
                   </div>
                 </div>
               </a>
 
-              {/* Email */}
-              <div
-                className="p-6 rounded-2xl"
-                style={{
-                  backgroundColor: '#FFFEFB',
-                  border: '1px solid #DDD9CF',
-                  boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)',
-                }}
-              >
+              <div className="p-6 rounded-2xl" style={{ backgroundColor: '#FFFEFB', border: '1px solid #DDD9CF', boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)' }}>
                 <div className="flex items-start gap-4">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#3F5A4F' }}
-                  >
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#3F5A4F' }}>
                     <Mail className="w-6 h-6" style={{ color: '#FFFEFB' }} />
                   </div>
                   <div>
-                    <h3
-                      className="text-lg mb-2"
-                      style={{ color: '#17202A', fontWeight: 600 }}
-                    >
-                      Email
-                    </h3>
-                    <a
-                      href={`mailto:${email}`}
-                      className="text-sm break-all hover:underline"
-                      style={{ color: '#3F5A4F', fontWeight: 500 }}
-                    >
+                    <h3 className="text-lg mb-2" style={{ color: '#17202A', fontWeight: 600 }}>Email</h3>
+                    <a href={`mailto:${email}`} className="text-sm break-all hover:underline" style={{ color: '#3F5A4F', fontWeight: 500 }}>
                       {email}
                     </a>
                   </div>
                 </div>
               </div>
 
-              {/* Phone */}
-              {/*<div
-                className="p-6 rounded-2xl"
-                style={{
-                  backgroundColor: '#FFFEFB',
-                  border: '1px solid #DDD9CF',
-                  boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)',
-                }}
-              >
+              <div className="p-6 rounded-2xl" style={{ backgroundColor: '#FFFEFB', border: '1px solid #DDD9CF', boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)' }}>
                 <div className="flex items-start gap-4">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#3F5A4F' }}
-                  >
-                    <Phone className="w-6 h-6" style={{ color: '#FFFEFB' }} />
-                  </div>
-                  <div>
-                    <h3
-                      className="text-lg mb-2"
-                      style={{ color: '#17202A', fontWeight: 600 }}
-                    >
-                      Teléfono
-                    </h3>
-                    <a
-                      href="tel:+34634097542"
-                      className="text-sm hover:underline"
-                      style={{ color: '#3F5A4F', fontWeight: 500 }}
-                    >
-                      +34 634 097 542
-                    </a>
-                  </div>
-                </div>
-              </div>*/}
-
-              {/* Location */}
-              <div
-                className="p-6 rounded-2xl"
-                style={{
-                  backgroundColor: '#FFFEFB',
-                  border: '1px solid #DDD9CF',
-                  boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)',
-                }}
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: '#3F5A4F' }}
-                  >
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#3F5A4F' }}>
                     <MapPin className="w-6 h-6" style={{ color: '#FFFEFB' }} />
                   </div>
                   <div>
-                    <h3
-                      className="text-lg mb-2"
-                      style={{ color: '#17202A', fontWeight: 600 }}
-                    >
-                      Ubicación
-                    </h3>
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{ color: '#4B5563', lineHeight: '1.6' }}
-                    >
+                    <h3 className="text-lg mb-2" style={{ color: '#17202A', fontWeight: 600 }}>Ubicación</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#4B5563', lineHeight: '1.6' }}>
                       Costa del Sol, España
                     </p>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
