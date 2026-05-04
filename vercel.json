@@ -6,6 +6,14 @@
   "devCommand": null,
   "rewrites": [
     {
+      "source": "/masinfo.html",
+      "destination": "/masinfo.html"
+    },
+    {
+      "source": "/masinfo",
+      "destination": "/masinfo.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
