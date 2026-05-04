@@ -25,5 +25,5 @@ export const router = createBrowserRouter([
   {
     path: '/unsubscribe',
     element: <Unsubscribe />,
-  },
+  }
 ]);
