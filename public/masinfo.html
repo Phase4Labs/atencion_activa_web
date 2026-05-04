@@ -556,9 +556,9 @@ document.getElementById('lead-form').addEventListener('submit', function(e) {
   btn.textContent = 'Enviando...';
 
   var props = document.getElementById('props').value || '';
-  var supabaseUrl = '%VITE_SUPABASE_URL%';
+  var supabaseUrl = 'https://yukshqlmukocpeqybvcb.supabase.co';
 
-  if (!supabaseUrl || supabaseUrl.indexOf('%VITE_') === 0) {
+  if (!supabaseUrl) {
     btn.disabled = false;
     btn.textContent = 'Quiero recibir información';
     alert('No se pudo enviar el formulario: falta configurar VITE_SUPABASE_URL.');
