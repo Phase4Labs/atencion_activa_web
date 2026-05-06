@@ -22,7 +22,7 @@ export function Resultados() {
           className="text-3xl lg:text-4xl xl:text-5xl mb-8 leading-tight max-w-4xl"
           style={{ color: '#17202A', fontWeight: 700 }}
         >
-          Protege resultados que ya dependen de vuestra capacidad de respuesta.
+          Protege resultados que ya dependen de tu capacidad de respuesta.
         </h2>
 
         {/* Intro */}

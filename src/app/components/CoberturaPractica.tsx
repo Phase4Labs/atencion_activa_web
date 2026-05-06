@@ -38,7 +38,7 @@ export function CoberturaPractica() {
           className="text-3xl lg:text-4xl xl:text-5xl mb-8 leading-tight max-w-4xl"
           style={{ color: '#17202A', fontWeight: 700 }}
         >
-          Qué puede cubrir Atención Activa en vuestra operativa diaria
+          Qué puede cubrir Atención Activa en tu operativa diaria
         </h2>
 
         {/* Intro */}

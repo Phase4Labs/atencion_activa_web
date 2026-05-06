@@ -10,7 +10,7 @@ export function FinalCTA() {
           className="text-3xl lg:text-4xl xl:text-5xl mb-8 leading-tight"
           style={{ color: '#FFFEFB', fontWeight: 700 }}
         >
-          Si vuestra captación depende de que alguien tenga un hueco para responder en ese
+          Si tu captación depende de que alguien tenga un hueco para responder en ese
           instante, probablemente ya existe un punto de fuga.
         </h2>
 
@@ -20,7 +20,7 @@ export function FinalCTA() {
           style={{ color: '#F7F6F2', lineHeight: '1.7' }}
         >
           Atención Activa está pensada para ayudaros a proteger llamadas y consultas de reserva
-          sin añadir más complejidad a vuestra operación.
+          sin añadir más complejidad a tu operación.
         </p>
 
         {/* CTAs */}
@@ -46,7 +46,7 @@ export function FinalCTA() {
               fontWeight: 600,
             }}
           >
-            Ver si encaja en vuestra operativa
+            Ver si encaja en tu operativa
           </button>
         </div>
       </div>

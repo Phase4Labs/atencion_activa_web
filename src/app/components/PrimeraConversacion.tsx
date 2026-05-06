@@ -13,7 +13,7 @@ export function PrimeraConversacion() {
     {
       number: '03',
       title: 'Valorar si tiene sentido aplicar Atención Activa',
-      body: 'Si vemos encaje, os mostramos cómo podría adaptarse a vuestra operación sin añadir complejidad innecesaria. Si no lo hay, os lo diremos con claridad.',
+      body: 'Si vemos encaje, os mostramos cómo podría adaptarse a tu operación sin añadir complejidad innecesaria. Si no lo hay, os lo diremos con claridad.',
     },
   ];
 
@@ -44,7 +44,7 @@ export function PrimeraConversacion() {
         >
           No planteamos una conversación comercial genérica. La primera llamada está pensada para
           entender cómo entran hoy las consultas, dónde se corta la atención y si Atención Activa
-          encaja de forma realista en vuestra operativa.
+          encaja de forma realista en tu operativa.
         </p>
 
         {/* Steps */}

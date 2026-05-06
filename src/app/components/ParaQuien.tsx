@@ -52,8 +52,8 @@ export function ParaQuien() {
           className="text-lg lg:text-xl mb-12 leading-relaxed max-w-4xl"
           style={{ color: "#4B5563", lineHeight: "1.7" }}
         >
-          Atención Activa está diseñada para property managers y
-          gestores de alquiler vacacional que necesitan proteger
+          Atención Activa está diseñada para gestores de propiedades
+          y de alquiler vacacional que necesitan proteger
           la atención comercial sin añadir más presión a un
           equipo ya cargado de operativa. Encaja especialmente
           bien en estructuras donde vender, coordinar y resolver

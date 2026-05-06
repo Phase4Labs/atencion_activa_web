@@ -60,13 +60,13 @@ export default function Contact() {
               className="text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight"
               style={{ color: '#17202A', fontWeight: 700 }}
             >
-              Hablemos de vuestra operativa
+              Hablemos de tu operativa
             </h1>
             <p
               className="text-lg lg:text-xl leading-relaxed"
               style={{ color: '#4B5563', lineHeight: '1.7' }}
             >
-              Estamos aquí para entender vuestras necesidades y ver si Atención Activa puede ayudaros a proteger vuestras oportunidades de reserva.
+              Estamos aquí para entender tus necesidades y ver si Atención Activa puede ayudaros a proteger tus oportunidades de reserva.
             </p>
           </div>
 
@@ -152,7 +152,7 @@ export default function Contact() {
                         {...register('empresa', { required: 'Este campo es obligatorio' })}
                         className="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2"
                         style={{ backgroundColor: '#F7F6F2', borderColor: errors.empresa ? '#d4183d' : '#DDD9CF', color: '#17202A' }}
-                        placeholder="Nombre de vuestra empresa"
+                        placeholder="Nombre de tu empresa"
                       />
                       {errors.empresa && <p className="text-sm mt-1" style={{ color: '#d4183d' }}>{errors.empresa.message}</p>}
                     </div>
@@ -221,7 +221,7 @@ export default function Contact() {
                       rows={5}
                       className="w-full px-4 py-3 rounded-lg border transition-colors focus:outline-none focus:ring-2 resize-none"
                       style={{ backgroundColor: '#F7F6F2', borderColor: '#DDD9CF', color: '#17202A' }}
-                      placeholder="Contadnos brevemente vuestra situación actual y qué os gustaría mejorar..."
+                      placeholder="Contadnos brevemente tu situación actual y qué os gustaría mejorar..."
                     />
                   </div>
 

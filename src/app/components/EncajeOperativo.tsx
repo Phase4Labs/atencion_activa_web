@@ -30,7 +30,7 @@ export function EncajeOperativo() {
           className="text-3xl lg:text-4xl xl:text-5xl mb-8 leading-tight max-w-4xl"
           style={{ color: "#17202A", fontWeight: 700 }}
         >
-          Diseñado para encajar en vuestra operativa y
+          Diseñado para encajar en tu operativa y
           potenciarla, no para complicarla.
         </h2>
 
@@ -43,7 +43,7 @@ export function EncajeOperativo() {
           proteger la atención comercial cuando el equipo no
           puede llegar a todo. La lógica es simple: mantener
           continuidad sin obligaros a estar siempre disponibles
-          ni a reorganizar toda vuestra operación.
+          ni a reorganizar toda tu operación.
         </p>
 
         {/* Split Layout */}
@@ -88,9 +88,9 @@ export function EncajeOperativo() {
                 lineHeight: "1.4",
               }}
             >
-              No necesitáis una solución que os añada más
-              trabajo. Necesitais una solución que te permite
-              cubrir lo que hoy se os escapa, logrando mayor
+              No necesitáis una solución que te añada más
+              trabajo. Necesitas una solución que te permita
+              cubrir lo que hoy se te escapa, logrando mayor
               retención y conversión.
             </p>
           </div>
