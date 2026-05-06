@@ -2,6 +2,7 @@ import { Navigation } from '../components/Navigation';
 import { Hero } from '../components/Hero';
 import { Problema } from '../components/Problema';
 import { Solucion } from '../components/Solucion';
+import { VistaProducto } from '../components/VistaProducto';
 import { ParaQuien } from '../components/ParaQuien';
 import { EncajeOperativo } from '../components/EncajeOperativo';
 import { Resultados } from '../components/Resultados';
@@ -18,6 +19,7 @@ export default function Home() {
       <Hero />
       <Problema />
       <Solucion />
+      <VistaProducto />
       <ParaQuien />
       <EncajeOperativo />
       <Resultados />
