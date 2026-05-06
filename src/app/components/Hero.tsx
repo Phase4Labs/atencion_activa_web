@@ -72,6 +72,7 @@ export function Hero() {
                 Solicitar una conversación inicial
                 <ArrowRight className="w-5 h-5" />
               </Link>
+              {/*
               <button
                 className="px-8 py-4 rounded-lg text-base transition-all hover:opacity-90"
                 style={{
@@ -83,6 +84,7 @@ export function Hero() {
               >
                 Ver cómo funciona
               </button>
+              */}
             </div>
           </div>
 
