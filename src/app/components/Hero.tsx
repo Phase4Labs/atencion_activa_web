@@ -25,7 +25,7 @@ export function Hero() {
               className="text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight"
               style={{ color: '#17202A', fontWeight: 700 }}
             >
-              No dejéis perder reservas por no poder responder a tiempo.
+              No dejes perder reservas por no poder responder a tiempo.
             </h1>
 
             {/* Subheadline */}
