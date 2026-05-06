@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 export function VistaProducto() {
   return (
     <section
@@ -139,6 +141,42 @@ export function VistaProducto() {
             </div>
           </div>
         </div>
+
+        {/* CTA */}
+        <div className="mt-16 flex flex-col items-center gap-4 text-center">
+          <Link
+            to="/contacto"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full transition-all duration-200"
+            style={{
+              backgroundColor: "#C9A97A",
+              color: "#17202A",
+              fontWeight: 700,
+              fontSize: "1rem",
+              letterSpacing: "0.01em",
+              boxShadow: "0 4px 24px rgba(201, 169, 122, 0.35)",
+              textDecoration: "none",
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#D9BB91";
+              (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 6px 32px rgba(201, 169, 122, 0.5)";
+              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#C9A97A";
+              (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 4px 24px rgba(201, 169, 122, 0.35)";
+              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
+            }}
+          >
+            Hablemos de cómo puede encajar en tu operativa
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </Link>
+          <p style={{ color: "#5A6E68", fontSize: "0.875rem" }}>
+            Sin compromiso. Una conversación para ver si tiene sentido.
+          </p>
+        </div>
+
       </div>
     </section>
   );
