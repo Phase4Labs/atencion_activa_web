@@ -127,7 +127,7 @@ export function Hero() {
                     <div key={idx} className="flex items-center gap-3">
                       <div
                         className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                        style={{ backgroundColor: '#3F5A4F' }}
+                        style={{ backgroundColor: '#C9A97A' }}
                       >
                         <Icon className="w-4 h-4" style={{ color: '#FFFEFB' }} />
                       </div>
